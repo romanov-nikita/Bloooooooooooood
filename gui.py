@@ -1,12 +1,17 @@
 import tkinter as tk
 import matplotlib.pyplot as plt
 import wk_calc
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg,
+    NavigationToolbar2Tk
+)
 
 
 # plot function is created for
 # plotting the graph in
 # tkinter window
-def plot(label,eHR,eSV,eR,eC):
+def plot(label,eHR,eSV,eR,eC, root):
     # the figure that will contain the plot
 
    #fig = Figure(figsize=(5, 5), dpi=100)
@@ -29,16 +34,31 @@ def plot(label,eHR,eSV,eR,eC):
     Psys = round(max(P))
     Pdia = round(min(P))
 
-    myString = "Pressure: " + str(Psys)+"/"+str(Pdia) + " mmHg";
+    myString = "Pressure: " + str(Psys)+"/"+str(Pdia) + " mmHg"
     label.config(text = myString)
 
-    plt.plot(P)
-    plt.show()
+    # create a figure
+    figure = Figure(figsize=(10, 10), dpi=100)
+
+    # create FigureCanvasTkAgg object
+    figure_canvas = FigureCanvasTkAgg(figure, root)
+
+    # create the toolbar
+    NavigationToolbar2Tk(figure_canvas, root)
+
+    # create axes
+    axes = figure.add_subplot()
+
+    # create the barchart
+    axes.plot(P)
+    axes.set_title('Pressure')
+
+    figure_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
 def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
-    root.geometry("700x200")
+    root.geometry("1920x1080")
 
     lHR = tk.Label(text="HR (bpm)", font="Arial 14")
     lSV = tk.Label(text="SV (ml)", font="Arial 14")
@@ -68,7 +88,7 @@ def main():
     ansL.place(x=320, y=50)
 
     plot_button = tk.Button(master=root,
-                            command = lambda: plot(ansL,eHR,eSV,eR,eC),
+                            command = lambda: plot(ansL,eHR,eSV,eR,eC, root),
                             height=1, width=20,
                             text="Calc Pressure",
                             font="Arial 14")
