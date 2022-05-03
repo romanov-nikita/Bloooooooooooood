@@ -29,13 +29,9 @@ def plot(label,eHR,eSV,eR,eC):
     Psys = round(max(P))
     Pdia = round(min(P))
 
-    myString = "Pressure: " + str(Psys)+"/"+str(Pdia) + " mmHg"
+    myString = "Pressure: " + str(Psys)+"/"+str(Pdia) + " mmHg";
     label.config(text = myString)
 
-    return P, myString
-
-def draw_plot(P):
-    plt.figure(figsize=(10,10))
     plt.plot(P)
     plt.show()
 
@@ -71,20 +67,12 @@ def main():
     ansL = tk.Label(text="Pressure: ", font="Arial 25")
     ansL.place(x=320, y=50)
 
-    plot_array, pressure = plot(ansL,eHR,eSV,eR,eC)
-    print(eHR)
-    pressure_label = tk.Label(text=pressure)
-
-    pressure_label.place(x=150, y=10)
-
     plot_button = tk.Button(master=root,
-                            command=draw_plot(plot_array),
+                            command = lambda: plot(ansL,eHR,eSV,eR,eC),
                             height=1, width=20,
                             text="Calc Pressure",
                             font="Arial 14")
     plot_button.place(x=10, y=150)
-
-
 
     root.mainloop()
 
