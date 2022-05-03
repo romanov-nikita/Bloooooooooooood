@@ -11,7 +11,7 @@ def main():
     R = 0.7
     C = 2.196
     Pout = 35
-    P = wk_calc.calcPressure(SV, HR, tsys, R, C, Pout)
+    P = wk_calc.calcPressure(SV, HR, tsys, 0.07, R, C, Pout, 0.0)
     Psys = max(P)
     Pdia = min(P)
     plt.plot(P)
