@@ -53,7 +53,7 @@ def plot(label,eHR,eSV,eR,eC, root):
     axes.plot(P)
     axes.set_title('Pressure')
 
-    figure_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+    figure_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1) 
 
 def main():
     root = tk.Tk()
