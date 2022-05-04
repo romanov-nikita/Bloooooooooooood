@@ -1,4 +1,5 @@
 import math
+from Q_in import Q_in
 
 # if R1 = 0 --> 2 windk
 # if R1 != 0 and L = 0 --> 3 windk
@@ -13,13 +14,13 @@ def calcPressure(SV, HR, tsys, R1, R2, C, Pout, L):
     pi = math.pi
 
     # initialize input flow and it's first-second derivatives
-    Coef = SV * pi / (2 * tsys)
+    Qin_class = Q_in(HR, SV)
     Qin = [0] * (nmax + 1)
     Qin_der1 = [0] * (nmax + 1)
     Qin_der2 = [0] * (nmax + 1)
-    Qin[0:(nsys + 1)] = [Coef * math.sin(pi * dt * i / tsys) for i in range(0, nsys + 1)]
-    Qin_der1[0:(nsys + 1)] = [Coef * math.cos(pi * dt * i / tsys) * pi / tsys for i in range(0, nsys + 1)]
-    Qin_der2[0:(nsys + 1)] = [-Coef * math.sin(pi * dt * i / tsys) * (pi / tsys)**2 for i  in range (0, nsys + 1)]
+    Qin = [Qin_class.Q(i*dt) for i in range(0, nmax + 1)]
+    Qin_der1 = [Qin_class.Q_der1(i*dt) for i in range(0, nmax + 1)]
+    Qin_der2 = [Qin_class.Q_der2(i*dt) for i in range (0, nmax + 1)]
 
     Nc = 10  # number of heart cycles
     P = [0] * (nmax * Nc + 1)
