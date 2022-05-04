@@ -19,7 +19,7 @@ widget_labels={'HR':'.foo.hr',
 # plotting the graph in
 # tkinter window
 
-def plot(label,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasodilators):
+def plot(figure, label,eHR,eSV, root):
     # the figure that will contain the plot
 
    #fig = Figure(figsize=(5, 5), dpi=100)
@@ -35,10 +35,11 @@ def plot(label,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasodilators):
     HR = float(eHR.get())
     tsys = 0.33
     R1 = 0
-    R2 = float(eR.get())
-    C = float(eC.get())
+    R2 = 1
+    C = 1
     Pout = 35
     L = 0
+    adrenaline=adenosine=vasodilators=False
     if adrenaline:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
     elif adenosine:
@@ -54,7 +55,7 @@ def plot(label,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasodilators):
     label.config(text = myString)
 
     # create a figure
-    figure = Figure(figsize=(5, 5), dpi=100)
+    figure = Figure(figsize=(5, 3))
 
     # create FigureCanvasTkAgg object
     figure_canvas = FigureCanvasTkAgg(figure, root)
@@ -65,108 +66,71 @@ def plot(label,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasodilators):
 
     # create the barchart
     axes.plot(P)
-    axes.set_title('Pressure')
     axes.grid()
 
-    figure_canvas.get_tk_widget().grid(row=1, column=3)
+    figure_canvas.get_tk_widget().grid(row=1, column=2, rowspan=7, pady=5)
     figure_canvas.draw()
 
 def make_buttons(root):
+    width=20
     frame = ttk.Frame(root, name='foo')
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=3)
     # HR label and entry
     ttk.Label(frame, text='HR (bpm)').grid(column=0, row=0, sticky=tk.W)
-    e_hr = ttk.Entry(frame, width=30, name='hr')
+    e_hr = ttk.Entry(frame, width=width, name='hr')
     e_hr.grid(column=1, row=0, sticky=tk.W)
 
     # SV label and entry
     ttk.Label(frame, text='SV (ml)').grid(column=0, row=1, sticky=tk.W)
-    v_hr = ttk.Entry(frame, width=30, name='sv')
-    v_hr.grid(column=1, row=1, sticky=tk.W)
+    e_sv = ttk.Entry(frame, width=width, name='sv')
+    e_sv.grid(column=1, row=1, sticky=tk.W)
+
+    # Psys label and entry
+    ttk.Label(frame, text='Psys (mmHg)').grid(column=0, row=2, sticky=tk.W)
+    psys = ttk.Entry(frame, width=width, name='psys')
+    psys.grid(column=1, row=2, sticky=tk.W)
+
+    # Pdys label and entry
+    ttk.Label(frame, text='Pdys(mmHg)').grid(column=0, row=3, sticky=tk.W)
+    p_dys = ttk.Entry(frame, width=width, name='pdys')
+    p_dys.grid(column=1, row=3, sticky=tk.W)
 
     # Add adrenaline button
-    ttk.Button(frame, text='Add adrenaline').grid(column=0, row=2)
+    ttk.Button(frame, text='Add adrenaline', width=width).grid(column=0, row=4)
 
     # Remove adrenaline button
-    ttk.Button(frame, text='Remove adrenaline').grid(column=1, row=2)
+    ttk.Button(frame, text='Remove adrenaline', width=width).grid(column=1, row=4)
 
     # Add adenosine button
-    ttk.Button(frame, text='Add adenosine').grid(column=0, row=3)
+    ttk.Button(frame, text='Add adenosine', width=width).grid(column=0, row=5)
 
     # Remove adenosine button
-    ttk.Button(frame, text='Remove adenosine').grid(column=1, row=3)
+    ttk.Button(frame, text='Remove adenosine', width=width).grid(column=1, row=5)
 
     # Add vaso button
-    ttk.Button(frame, text='Add vaso').grid(column=0, row=4)
+    ttk.Button(frame, text='Add vaso', width=width).grid(column=0, row=6)
 
     # Remove vaso button
-    ttk.Button(frame, text='Remove vaso').grid(column=1, row=4)
+    ttk.Button(frame, text='Remove vaso', width=width).grid(column=1, row=6)
 
+    label = ttk.Label(frame, font="Arial 20")
+    label.grid(column=2, row=0, rowspan=2, sticky=tk.N)
 
-    ttk.Label(frame, text="Pressure: ", font="Arial 25").grid(column=2, row=0)
-
-    for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=3)
-
-    return frame
-
-
-"""
-    # Replace with:
-    ttk.Label(frame, text='Replace with:').grid(column=0, row=1, sticky=tk.W)
-    replacement = ttk.Entry(frame, width=30)
-    replacement.grid(column=1, row=1, sticky=tk.W)
-
-    # Match Case checkbox
-    match_case = tk.StringVar()
-    match_case_check = ttk.Checkbutton(
-        frame,
-        text='Match case',
-        variable=match_case,
-        command=lambda: print(match_case.get()))
-    match_case_check.grid(column=0, row=2, sticky=tk.W)
-
-    # Wrap Around checkbox
-    wrap_around = tk.StringVar()
-    wrap_around_check = ttk.Checkbutton(
-        frame,
-        variable=wrap_around,
-        text='Wrap around',
-        command=lambda: print(wrap_around.get()))
-    wrap_around_check.grid(column=0, row=3, sticky=tk.W)
+    ttk.Button(frame, command=lambda: plot(figure, label, e_hr, e_sv, frame),
+                            width=width*2+4,
+                            text="Calc Pressure").grid(column=0, row=7, columnspan=2)
 
     for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=5)
+        widget.grid(padx=5, pady=10, ipadx=2, ipady=1)
 
     return frame
-
-    lHR = tk.Label(text="HR (bpm)", font="Arial 14")
-    lSV = tk.Label(text="SV (ml)", font="Arial 14")
-    lR = tk.Label(text="R", font="Arial 14")
-    lC = tk.Label(text="C", font="Arial 14")
-
-    lHR.place(x=10, y=20)
-    lSV.place(x=10, y=50)
-    lR.place(x=10, y=80)
-    lC.place(x=10, y=110)
-
-    eHR = tk.Entry(width=10)
-    eHR.insert(0, "65")
-    eSV = tk.Entry(width=10)
-    eSV.insert(0, "70")
-    eR = tk.Entry(width=10)
-    eR.insert(0, "0.7")
-    eC = tk.Entry(width=10)
-    eC.insert(0, "2.196")
-"""
 
 def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
-    root.geometry("1000x500")
-
+    root.geometry("800x370")
 
     fr = make_buttons(root)
 
@@ -178,25 +142,6 @@ def main():
     adenosine = False
     vasolidators = False
     root.mainloop()
-
-
-"""
-    eHR.place(x=120, y=25)
-    eSV.place(x=120, y=55)
-    eR.place(x=120, y=85)
-    eC.place(x=120, y=115)
-"""
-
-
-"""
-    plot_button = tk.Button(master=root,
-                            command = lambda: plot(ansL,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasolidators),
-                            height=1, width=20,
-                            text="Calc Pressure",
-                            font="Arial 14")
-    plot_button.place(x=10, y=150)
-"""
-
 
 if __name__ == '__main__':
     main()
