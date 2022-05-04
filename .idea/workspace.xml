@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" name="Changes" comment="Ebat' copat' che poluchilos'">
-      <change afterPath="$PROJECT_DIR$/Q_in.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/better_gui.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wk_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk_calc.py" afterDir="false" />
-    </list>
+    <list default="true" id="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" name="Changes" comment="Ebat' copat' che poluchilos'" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
