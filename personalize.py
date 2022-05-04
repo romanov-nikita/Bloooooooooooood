@@ -9,7 +9,7 @@ def calcParameters(stroke_volume, heart_rate, tsys, p_sys, p_dias, p_out):
     T = T - (T % dt)
     nmax = int(T // dt)
 
-    Qin_class = Q_in(HR, SV)
+    Qin_class = Q_in(heart_rate, stroke_volume)
     Qin = [Qin_class.Q(i * dt) for i in range(0, nmax + 1)]
 
     Q_in_avg = sum(Qin) / len(Qin)
@@ -23,3 +23,4 @@ def calcParameters(stroke_volume, heart_rate, tsys, p_sys, p_dias, p_out):
 
     parameters = [R1, R2, C]
     return parameters
+
