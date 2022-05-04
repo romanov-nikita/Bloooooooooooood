@@ -1,5 +1,6 @@
 import tkinter as tk
 import matplotlib.pyplot as plt
+from tkinter import ttk
 import wk_calc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (
@@ -11,7 +12,8 @@ from matplotlib.backends.backend_tkagg import (
 # plot function is created for
 # plotting the graph in
 # tkinter window
-def plot(label,eHR,eSV,eR,eC, root):
+
+def plot(label,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasodilators):
     # the figure that will contain the plot
 
    #fig = Figure(figsize=(5, 5), dpi=100)
@@ -26,11 +28,19 @@ def plot(label,eHR,eSV,eR,eC, root):
     SV = float(eSV.get())
     HR = float(eHR.get())
     tsys = 0.33
-    R = float(eR.get())
+    R1 = 0
+    R2 = float(eR.get())
     C = float(eC.get())
     Pout = 35
-    P = wk_calc.calcPressure(SV, HR, tsys, R, C, Pout)
-
+    L = 0
+    if adrenaline:
+        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
+    elif adenosine:
+        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
+    elif vasodilators:
+        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
+    else:
+        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
     Psys = round(max(P))
     Pdia = round(min(P))
 
@@ -38,13 +48,11 @@ def plot(label,eHR,eSV,eR,eC, root):
     label.config(text = myString)
 
     # create a figure
-    figure = Figure(figsize=(10, 10), dpi=100)
+    figure = Figure(figsize=(5, 5), dpi=100)
 
     # create FigureCanvasTkAgg object
     figure_canvas = FigureCanvasTkAgg(figure, root)
-
     # create the toolbar
-    NavigationToolbar2Tk(figure_canvas, root)
 
     # create axes
     axes = figure.add_subplot()
@@ -52,14 +60,19 @@ def plot(label,eHR,eSV,eR,eC, root):
     # create the barchart
     axes.plot(P)
     axes.set_title('Pressure')
+    axes.grid()
 
-    figure_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+    figure_canvas.get_tk_widget().grid(row=1, column=3)
+    figure_canvas.draw()
 
 def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
     root.geometry("1920x1080")
-
+    frame = ttk.Frame(root)
+    frame.columnconfigure(0, weight=1)
+    frame.columnconfigure(0, weight=1)
+    frame.columnconfigure(0, weight=3)
     lHR = tk.Label(text="HR (bpm)", font="Arial 14")
     lSV = tk.Label(text="SV (ml)", font="Arial 14")
     lR = tk.Label(text="R", font="Arial 14")
@@ -88,8 +101,12 @@ def main():
     ansL = tk.Label(text="Pressure: ", font="Arial 25")
     ansL.place(x=320, y=50)
 
+    adrenaline = False
+    adenosine = False
+    vasolidators = False
+
     plot_button = tk.Button(master=root,
-                            command = lambda: plot(ansL,eHR,eSV,eR,eC, root),
+                            command = lambda: plot(ansL,eHR,eSV,eR,eC, root, adrenaline, adenosine, vasolidators),
                             height=1, width=20,
                             text="Calc Pressure",
                             font="Arial 14")
