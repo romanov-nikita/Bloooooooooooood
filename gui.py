@@ -19,7 +19,7 @@ widget_labels={'HR':'.foo.hr',
 # plotting the graph in
 # tkinter window
 
-def plot(figure, label,eHR,eSV, root):
+def plot(label,eHR,eSV, root):
     # the figure that will contain the plot
 
    #fig = Figure(figsize=(5, 5), dpi=100)
@@ -52,7 +52,7 @@ def plot(figure, label,eHR,eSV, root):
     Pdia = round(min(P))
 
     myString = "Pressure: " + str(Psys)+"/"+str(Pdia) + " mmHg"
-    label.config(text = myString)
+    label.config(text=myString)
 
     # create a figure
     figure = Figure(figsize=(5, 3))
@@ -118,7 +118,7 @@ def make_buttons(root):
     label = ttk.Label(frame, font="Arial 20")
     label.grid(column=2, row=0, rowspan=2, sticky=tk.N)
 
-    ttk.Button(frame, command=lambda: plot(figure, label, e_hr, e_sv, frame),
+    ttk.Button(frame, command=lambda: plot(label, e_hr, e_sv, frame),
                             width=width*2+4,
                             text="Calc Pressure").grid(column=0, row=7, columnspan=2)
 
