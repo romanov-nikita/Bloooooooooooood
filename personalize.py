@@ -23,4 +23,3 @@ def calcParameters(stroke_volume, heart_rate, tsys, p_sys, p_dias, p_out):
 
     parameters = [R1, R2, C]
     return parameters
-
