@@ -38,7 +38,7 @@ def plot(label,eHR,eSV, root):
     R2 = 1
     C = 1
     Pout = 35
-    L = 0
+    L = 0.00
     adrenaline=adenosine=vasodilators=False
     if adrenaline:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
@@ -96,6 +96,9 @@ def make_buttons(root):
     p_dys.grid(column=1, row=3, sticky=tk.W)
 
     # Add adrenaline button
+    # HR + 10%
+    # R2 - 20%
+    # C - 40%
     ttk.Button(frame, text='Add adrenaline', width=width).grid(column=0, row=4)
 
     # Remove adrenaline button
@@ -107,11 +110,11 @@ def make_buttons(root):
     # Remove adenosine button
     ttk.Button(frame, text='Remove adenosine', width=width).grid(column=1, row=5)
 
-    # Add vaso button
-    ttk.Button(frame, text='Add vaso', width=width).grid(column=0, row=6)
+    # Add caffeine button
+    ttk.Button(frame, text='Add caffeine', width=width).grid(column=0, row=6)
 
-    # Remove vaso button
-    ttk.Button(frame, text='Remove vaso', width=width).grid(column=1, row=6)
+    # Remove caffeine button
+    ttk.Button(frame, text='Remove caffeine', width=width).grid(column=1, row=6)
 
     label = ttk.Label(frame, font="Arial 20")
     label.grid(column=2, row=0, rowspan=2, sticky=tk.N)
