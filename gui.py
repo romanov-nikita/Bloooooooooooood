@@ -56,14 +56,12 @@ def plot(label,eHR,eSV, root):
 
     # create a figure
     figure = Figure(figsize=(5, 3))
-
     # create FigureCanvasTkAgg object
     figure_canvas = FigureCanvasTkAgg(figure, root)
     # create the toolbar
 
     # create axes
     axes = figure.add_subplot()
-
     # create the barchart
     axes.plot(P)
     axes.grid()
@@ -131,6 +129,13 @@ def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
     root.geometry("800x370")
+    root.resizable(0, 0)
+
+    style = ttk.Style()
+    button_1 = ttk.Button(root, text='click me')
+    style.theme_use('alt')
+    style.configure('TButton', font=('American typewriter', 8), background='#222222', foreground='white')
+    style.map('TButton', background=[('active', '#4287f5'), ('disabled', '#00f0f0')])
 
     fr = make_buttons(root)
 
