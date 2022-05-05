@@ -11,7 +11,6 @@ def optR1(R2, C, stroke_volume, heart_rate, tsys, p_sys, p_dias, p_out):
         if delta < delta_opt:
             x_opt = x
             delta_opt = delta
-            print(max(P), p_sys, min(P), p_dias, x_opt)
     return R2 / x_opt
 
 
