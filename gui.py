@@ -2,6 +2,7 @@ import tkinter as tk
 from personalize import calcParameters
 import matplotlib.pyplot as plt
 from tkinter import ttk
+import numpy as np
 import wk_calc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (
@@ -15,6 +16,7 @@ and flag for removing existing calculations from plot
 medicine = {'Adrenaline': False,
             'Adenosine': False,
             'Caffeine': False,
+            'Tachycardia': False,
             'Remove': False
             }
 
@@ -52,7 +54,7 @@ def remove(label):
 Function that calculates the pressure and draws plot
 """
 def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
-         caffeine, figure, axes):
+         caffeine, tachycardia, figure, axes):
     global figure_canvas
     # plotting the graph
     SV = float(eSV.get())
@@ -88,6 +90,16 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
 
         myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR))} bpm"
         label.config(text=myString)
+    elif tachycardia:
+        SV_new = SV - HR / 6
+        P = wk_calc.calcPressure(SV_new, 2*HR, tsys, R1, R2, C, Pout, L)
+        P = np.append(P,P)
+        name = 'Tachycardia'
+        Psys = round(max(P))
+        Pdia = round(min(P))
+
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(2*HR))} bpm"
+        label.config(text=myString)
     else:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
         name = 'Normal'
@@ -121,6 +133,7 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
 def make_buttons(root):
     width = 20
     figure, axes = plt.subplots(figsize=(8, 6))
+    axes.grid()
     frame = ttk.Frame(root, name='foo')
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=1)
@@ -169,6 +182,10 @@ def make_buttons(root):
                command=lambda: add_check('Caffeine'))\
         .grid(column=0, row=6, columnspan=2)
 
+    # Tachycardia button
+    ttk.Button(frame, text='Tachycardia', width=width * 2 + 4,
+               command=lambda: add_check('Tachycardia')) \
+        .grid(column=0, row=7, columnspan=2)
 
 
     label = ttk.Label(frame, font=("Arial" ,20))
@@ -177,15 +194,16 @@ def make_buttons(root):
     # Remove
     ttk.Button(frame, text='Remove', width=width * 2 + 4,
                command=lambda: remove(label)) \
-        .grid(column=0, row=7, columnspan=2)
+        .grid(column=0, row=8, columnspan=2)
 
     ttk.Button(frame, command=lambda: plot(label, e_hr, e_sv, p_sys, p_dys, frame,
                                            medicine['Adrenaline'],
                                            medicine['Adenosine'],
                                            medicine['Caffeine'],
+                                           medicine['Tachycardia'],
                                            figure, axes),
                width=width * 2 + 4,
-               text="Calc Pressure").grid(column=0, row=8, columnspan=2)
+               text="Calc Pressure").grid(column=0, row=9, columnspan=2)
 
     for widget in frame.winfo_children():
         widget.grid(padx=5, pady=12, ipadx=2, ipady=12)
@@ -196,7 +214,7 @@ def make_buttons(root):
 def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
-    root.geometry("1300x724")
+    root.geometry("1300x800")
     root.resizable(0, 0)
 
     style = ttk.Style()
