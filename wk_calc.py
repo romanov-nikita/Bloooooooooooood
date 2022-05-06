@@ -28,4 +28,4 @@ def calcPressure(SV, HR, tsys, R1, R2, C, Pout, L):
 
     Plast = P[nmax*(Nc-1)+1:nmax * Nc + 2]
 
-    return Plast
+    return np.append(Plast, np.append(Plast, np.append(Plast, np.append(Plast, np.append(Plast, Plast)))))

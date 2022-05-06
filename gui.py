@@ -42,12 +42,14 @@ Sets False to all the values in medicine dictionary and clears plot output
 Gets label from GUI where pressure should be shown
 """
 def remove(label):
+    global axes
     global medicine
     global figure_canvas
     plt.cla()
     label.config(text=' ')
     for key in medicine.keys():
         medicine[key]=False
+        medicine['Remove'] = True
     figure_canvas.draw()
 
 """
@@ -68,32 +70,31 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
     # Parameters adjusting
     R1, R2, C = calcParameters(SV, HR, tsys, p_Sys, p_Dys, Pout)
     if adrenaline:
-        P = wk_calc.calcPressure(SV, 1.1 * HR, tsys, R1, 0.8 * R2, 0.6 * C, Pout, L)
+        P = wk_calc.calcPressure(SV, 1.1 * HR, tsys, R1, 0.8281 * R2, 0.5652 * C, Pout, L)
         name ='Adrenaline'
         Psys = round(max(P))
         Pdia = round(min(P))
-        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(1.1 * HR))} bpm"
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(1.1*HR))} bpm"
         label.config(text=myString)
     elif adenosine:
-        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
+        P = wk_calc.calcPressure(SV, HR * 1.35, tsys, R1, R2 * 0.6597, C * 0.9194, Pout, L)
         name = 'Adenosine'
         Psys = round(max(P))
         Pdia = round(min(P))
 
-        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR))} bpm"
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR*1.4))} bpm"
         label.config(text=myString)
     elif caffeine:
-        P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
+        P = wk_calc.calcPressure(SV, HR * 0.95, tsys, R1, R2 * 1.05, C * 0.6, Pout, L)
         name = 'Caffeine'
         Psys = round(max(P))
         Pdia = round(min(P))
 
-        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR))} bpm"
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR * 0.95))} bpm"
         label.config(text=myString)
     elif tachycardia:
         SV_new = SV - HR / 6
         P = wk_calc.calcPressure(SV_new, 2*HR, tsys, R1, R2, C, Pout, L)
-        P = np.append(P,P)
         name = 'Tachycardia'
         Psys = round(max(P))
         Pdia = round(min(P))
@@ -123,6 +124,11 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
     axes.set_ylabel('Pressure, mmHg', fontsize=14)
     axes.set_xlabel('time, ms', fontsize=14)
 
+    if medicine['Remove']:
+        axes.grid()
+        axes.set_xlim((0, 2000))
+        medicine['Remove'] = False
+
     if figure_canvas == None:
         figure_canvas = FigureCanvasTkAgg(figure, root)
         figure_canvas.get_tk_widget().grid(row=1, column=2, rowspan=8)
@@ -132,20 +138,24 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
 
 def make_buttons(root):
     width = 20
+    plt.xlim(2000)
     figure, axes = plt.subplots(figsize=(8, 6))
     axes.grid()
+    axes.set_xlim((0, 2000))
     frame = ttk.Frame(root, name='foo')
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=3)
     # HR label and entry
-    ttk.Label(frame, text='HR (bpm)', font=("Arial",14)).grid(column=0, row=0, sticky=tk.W)
+    ttk.Label(frame, text='HR (bpm)', font=("Arial",14))\
+        .grid(column=0, row=0, sticky=tk.W)
     e_hr = ttk.Entry(frame, width=width, name='hr', font=("Arial",14))
     e_hr.insert(-1, '80')
     e_hr.grid(column=1, row=0, sticky=tk.W)
 
     # SV label and entry
-    ttk.Label(frame, text='SV (ml)', font=("Arial", 14)).grid(column=0, row=1, sticky=tk.W)
+    ttk.Label(frame, text='SV (ml)', font=("Arial", 14))\
+        .grid(column=0, row=1, sticky=tk.W)
     e_sv = ttk.Entry(frame, width=width, name='sv', font=("Arial", 14))
     e_sv.insert(-1, '50')
     e_sv.grid(column=1, row=1, sticky=tk.W)
@@ -157,7 +167,8 @@ def make_buttons(root):
     p_sys.grid(column=1, row=2, sticky=tk.W)
 
     # Pdys label and entry
-    ttk.Label(frame, text='Pdias(mmHg)', font=("Arial", 14)).grid(column=0, row=3, sticky=tk.W)
+    ttk.Label(frame, text='Pdias(mmHg)', font=("Arial", 14))\
+        .grid(column=0, row=3, sticky=tk.W)
     p_dys = ttk.Entry(frame, width=width, name='pdys', font=("Arial" ,14))
     p_dys.insert(-1, '70')
     p_dys.grid(column=1, row=3, sticky=tk.W)
@@ -166,25 +177,25 @@ def make_buttons(root):
     # HR + 10%
     # R2 - 20%
     # C - 40%
-    ttk.Button(frame, text='Add adrenaline', width=width*2+4,
-               command=lambda: add_check('Adrenaline')) \
+    ttk.Button(frame, text='Add adrenaline (0.5 ml)', width=width*2+4,
+               command=lambda: add_check('Adrenaline'), cursor='pirate') \
         .grid(column=0, row=4, columnspan=2)
 
 
     # Add adenosine button
     ttk.Button(frame, text='Add adenosine', width=width*2+4,
-               command=lambda: add_check('Adenosine'))\
+               command=lambda: add_check('Adenosine'), cursor='sailboat')\
         .grid(column=0, row=5, columnspan=2)
 
 
     # Add caffeine button
-    ttk.Button(frame, text='Add caffeine', width=width*2+4,
-               command=lambda: add_check('Caffeine'))\
+    ttk.Button(frame, text='Add caffeine (200mg)', width=width*2+4,
+               command=lambda: add_check('Caffeine'), cursor='coffee_mug')\
         .grid(column=0, row=6, columnspan=2)
 
     # Tachycardia button
     ttk.Button(frame, text='Tachycardia', width=width * 2 + 4,
-               command=lambda: add_check('Tachycardia')) \
+               command=lambda: add_check('Tachycardia'), cursor='heart') \
         .grid(column=0, row=7, columnspan=2)
 
 
@@ -193,7 +204,7 @@ def make_buttons(root):
 
     # Remove
     ttk.Button(frame, text='Remove', width=width * 2 + 4,
-               command=lambda: remove(label)) \
+               command=lambda: remove(label), cursor='x_cursor') \
         .grid(column=0, row=8, columnspan=2)
 
     ttk.Button(frame, command=lambda: plot(label, e_hr, e_sv, p_sys, p_dys, frame,
@@ -202,8 +213,8 @@ def make_buttons(root):
                                            medicine['Caffeine'],
                                            medicine['Tachycardia'],
                                            figure, axes),
-               width=width * 2 + 4,
-               text="Calc Pressure").grid(column=0, row=9, columnspan=2)
+               width=width * 2 + 4, cursor='gumby',
+               text="Calculate Pressure").grid(column=0, row=9, columnspan=2)
 
     for widget in frame.winfo_children():
         widget.grid(padx=5, pady=12, ipadx=2, ipady=12)
