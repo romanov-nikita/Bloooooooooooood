@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" name="Changes" comment="Ebat' copat' che poluchilos'">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wk_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk_calc.py" afterDir="false" />
-    </list>
-    <list id="20584f92-9811-4096-9b49-0d5826276c3f" name="Changes by anastasia" comment="">
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
     </list>
+    <list id="20584f92-9811-4096-9b49-0d5826276c3f" name="Changes by anastasia" comment="" />
     <list id="4337adf6-2bd0-4c65-b660-c695f1fdf834" name="Changes by ansts" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,33 +29,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/gui.py">
-      <ranges>
-        <range start1="44" end1="44" start2="44" end2="45" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="50" end1="50" start2="51" end2="52" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="70" end1="71" start2="72" end2="73" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="74" end1="75" start2="76" end2="77" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="77" end1="78" start2="79" end2="80" changelist="20584f92-9811-4096-9b49-0d5826276c3f" />
-        <range start1="82" end1="83" start2="84" end2="85" changelist="20584f92-9811-4096-9b49-0d5826276c3f" />
-        <range start1="85" end1="86" start2="87" end2="88" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="90" end1="91" start2="92" end2="93" changelist="20584f92-9811-4096-9b49-0d5826276c3f" />
-        <range start1="95" end1="96" start2="97" end2="97" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="124" end1="124" start2="125" end2="130" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="134" end1="134" start2="140" end2="141" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="136" end1="136" start2="143" end2="144" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="141" end1="142" start2="149" end2="151" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="147" end1="148" start2="156" end2="158" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="159" end1="160" start2="169" end2="171" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="168" end1="170" start2="179" end2="181" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="175" end1="176" start2="186" end2="187" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="180" end1="182" start2="191" end2="193" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="186" end1="187" start2="197" end2="198" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="195" end1="196" start2="206" end2="207" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-        <range start1="204" end1="206" start2="215" end2="217" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

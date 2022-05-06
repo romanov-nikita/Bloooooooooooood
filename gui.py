@@ -77,7 +77,7 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
         myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(1.1*HR))} bpm"
         label.config(text=myString)
     elif adenosine:
-        P = wk_calc.calcPressure(SV, HR * 1.35, tsys, R1, R2 * 0.6597, C * 0.9194, Pout, L)
+        P = wk_calc.calcPressure(SV * 0.9, HR * 1.35, tsys, R1, R2 * 0.8, C * 0.9452, Pout, L)
         name = 'Adenosine'
         Psys = round(max(P))
         Pdia = round(min(P))
