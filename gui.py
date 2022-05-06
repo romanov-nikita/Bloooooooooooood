@@ -68,20 +68,34 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
     if adrenaline:
         P = wk_calc.calcPressure(SV, 1.1 * HR, tsys, R1, 0.8 * R2, 0.6 * C, Pout, L)
         name ='Adrenaline'
+        Psys = round(max(P))
+        Pdia = round(min(P))
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(1.1 * HR))} bpm"
+        label.config(text=myString)
     elif adenosine:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
         name = 'Adenosine'
+        Psys = round(max(P))
+        Pdia = round(min(P))
+
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR))} bpm"
+        label.config(text=myString)
     elif caffeine:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
         name = 'Caffeine'
+        Psys = round(max(P))
+        Pdia = round(min(P))
+
+        myString = f"Pressure: {str(Psys)} / {str(Pdia)} mmHg  HR : {str(round(HR))} bpm"
+        label.config(text=myString)
     else:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
         name = 'Normal'
-    Psys = round(max(P))
-    Pdia = round(min(P))
+        Psys = round(max(P))
+        Pdia = round(min(P))
+        myString = "Pressure: " + str(Psys) + "/" + str(Pdia) + " mmHg"
+        label.config(text=myString)
 
-    myString = "Pressure: " + str(Psys) + "/" + str(Pdia) + " mmHg"
-    label.config(text=myString)
 
     # create a figure
     # create FigureCanvasTkAgg object
@@ -114,21 +128,25 @@ def make_buttons(root):
     # HR label and entry
     ttk.Label(frame, text='HR (bpm)', font=("Arial",14)).grid(column=0, row=0, sticky=tk.W)
     e_hr = ttk.Entry(frame, width=width, name='hr', font=("Arial",14))
+    e_hr.insert(-1, '80')
     e_hr.grid(column=1, row=0, sticky=tk.W)
 
     # SV label and entry
     ttk.Label(frame, text='SV (ml)', font=("Arial", 14)).grid(column=0, row=1, sticky=tk.W)
     e_sv = ttk.Entry(frame, width=width, name='sv', font=("Arial", 14))
+    e_sv.insert(-1, '50')
     e_sv.grid(column=1, row=1, sticky=tk.W)
 
     # Psys label and entry
     ttk.Label(frame, text='Psys (mmHg)', font=("Arial", 14)).grid(column=0, row=2, sticky=tk.W)
     p_sys = ttk.Entry(frame, width=width, name='psys', font=("Arial", 14))
+    p_sys.insert(-1, '110')
     p_sys.grid(column=1, row=2, sticky=tk.W)
 
     # Pdys label and entry
     ttk.Label(frame, text='Pdias(mmHg)', font=("Arial", 14)).grid(column=0, row=3, sticky=tk.W)
     p_dys = ttk.Entry(frame, width=width, name='pdys', font=("Arial" ,14))
+    p_dys.insert(-1, '70')
     p_dys.grid(column=1, row=3, sticky=tk.W)
 
     # Add adrenaline button
@@ -185,9 +203,6 @@ def main():
     style.theme_use('alt')
     style.configure('TButton', font=('American typewriter', 16), background='#222222', foreground='white')
     style.map('TButton', background=[('active', '#4287f5'), ('disabled', '#00f0f0')])
-
-    style.configure('TButton_pressed', font=('American typewriter', 16), background='#222222', foreground='white')
-    style.map('TButton_pressed', background=[('disabled', '#4287f5')])
 
     fr = make_buttons(root)
 

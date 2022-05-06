@@ -8,7 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
     </list>
-    <list id="6986bc74-7779-41c6-a22c-01b85149c1b4" name="Changes by anastasia" comment="" />
+    <list id="6986bc74-7779-41c6-a22c-01b85149c1b4" name="Changes by anastasia" comment="">
+      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+    </list>
     <list id="4337adf6-2bd0-4c65-b660-c695f1fdf834" name="Changes by ansts" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +31,21 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/gui.py">
+      <ranges>
+        <range start1="70" end1="70" start2="70" end2="74" changelist="6986bc74-7779-41c6-a22c-01b85149c1b4" />
+        <range start1="73" end1="73" start2="77" end2="82" changelist="6986bc74-7779-41c6-a22c-01b85149c1b4" />
+        <range start1="76" end1="76" start2="85" end2="90" changelist="6986bc74-7779-41c6-a22c-01b85149c1b4" />
+        <range start1="79" end1="84" start2="93" end2="98" changelist="6986bc74-7779-41c6-a22c-01b85149c1b4" />
+        <range start1="116" end1="116" start2="130" end2="131" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
+        <range start1="121" end1="121" start2="136" end2="137" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
+        <range start1="126" end1="126" start2="142" end2="143" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
+        <range start1="131" end1="131" start2="148" end2="149" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
+        <range start1="187" end1="190" start2="205" end2="205" changelist="2ff1c6dd-4256-4e4a-baf5-f6a1b8231437" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
