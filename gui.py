@@ -5,29 +5,40 @@ from tkinter import ttk
 import wk_calc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg,
-    NavigationToolbar2Tk
+    FigureCanvasTkAgg
 )
 
-widget_labels = {'HR': '.foo.hr',
-                 'SV': '.foo.sv',
-                 'Pressure': '.foo.pressure',
-                 'Plot': '.foo.plot'
-                 }
-
+"""
+Dictionary representing medicine that can be added to calculations
+and flag for removing existing calculations from plot
+"""
 medicine = {'Adrenaline': False,
             'Adenosine': False,
             'Caffeine': False,
-            'Remove':False}
+            'Remove': False
+            }
 
+"""
+Global variable for figure canvas to be drawn in GUI
+"""
 figure_canvas = None
-# Check if medicine is false, disable add button and enable remove button
+
+"""
+Function checking what medicine is added for calculations.
+Sets True for chosen medicine and False for the rest objects in medicine dictionary
+Gets name of medicine to be added
+"""
 def add_check(med):
     global medicine
     for key in medicine.keys():
         medicine[key] = False
     medicine[med] = True
 
+"""
+Function checking whether remove was chosen.
+Sets False to all the values in medicine dictionary and clears plot output
+Gets label from GUI where pressure should be shown
+"""
 def remove(label):
     global medicine
     global figure_canvas
@@ -37,8 +48,11 @@ def remove(label):
         medicine[key]=False
     figure_canvas.draw()
 
+"""
+Function that calculates the pressure and draws plot
+"""
 def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
-         caffeine, figure, axes, remove):
+         caffeine, figure, axes):
     global figure_canvas
     # plotting the graph
     SV = float(eSV.get())
@@ -48,14 +62,12 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
     p_Dys = float(p_dys.get())
     Pout = 35
     L = 0.00
-    print(adrenaline)
+    print(medicine)
     # Parameters adjusting
     R1, R2, C = calcParameters(SV, HR, tsys, p_Sys, p_Dys, Pout)
-    name = ''
     if adrenaline:
         P = wk_calc.calcPressure(SV, 1.1 * HR, tsys, R1, 0.8 * R2, 0.6 * C, Pout, L)
         name ='Adrenaline'
-        print('doing adr')
     elif adenosine:
         P = wk_calc.calcPressure(SV, HR, tsys, R1, R2, C, Pout, L)
         name = 'Adenosine'
@@ -80,10 +92,10 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
     # create axes
     # create the barchart
     axes.plot(P, label=name)
-    axes.legend()
-    axes.set_title('Pressure')
-    axes.set_ylabel('Pressure, mmHg')
-    axes.set_xlabel('time, ms')
+    axes.legend(fontsize=14)
+    axes.set_title('Pressure', fontsize=14)
+    axes.set_ylabel('Pressure, mmHg', fontsize=14)
+    axes.set_xlabel('time, ms', fontsize=14)
 
     if figure_canvas == None:
         figure_canvas = FigureCanvasTkAgg(figure, root)
@@ -94,29 +106,29 @@ def plot(label, eHR, eSV, p_sys, p_dys, root, adrenaline, adenosine,
 
 def make_buttons(root):
     width = 20
-    figure, axes = plt.subplots(figsize=(5, 3))
+    figure, axes = plt.subplots(figsize=(8, 6))
     frame = ttk.Frame(root, name='foo')
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=3)
     # HR label and entry
-    ttk.Label(frame, text='HR (bpm)').grid(column=0, row=0, sticky=tk.W)
-    e_hr = ttk.Entry(frame, width=width, name='hr')
+    ttk.Label(frame, text='HR (bpm)', font=("Arial",14)).grid(column=0, row=0, sticky=tk.W)
+    e_hr = ttk.Entry(frame, width=width, name='hr', font=("Arial",14))
     e_hr.grid(column=1, row=0, sticky=tk.W)
 
     # SV label and entry
-    ttk.Label(frame, text='SV (ml)').grid(column=0, row=1, sticky=tk.W)
-    e_sv = ttk.Entry(frame, width=width, name='sv')
+    ttk.Label(frame, text='SV (ml)', font=("Arial", 14)).grid(column=0, row=1, sticky=tk.W)
+    e_sv = ttk.Entry(frame, width=width, name='sv', font=("Arial", 14))
     e_sv.grid(column=1, row=1, sticky=tk.W)
 
     # Psys label and entry
-    ttk.Label(frame, text='Psys (mmHg)').grid(column=0, row=2, sticky=tk.W)
-    p_sys = ttk.Entry(frame, width=width, name='psys')
+    ttk.Label(frame, text='Psys (mmHg)', font=("Arial", 14)).grid(column=0, row=2, sticky=tk.W)
+    p_sys = ttk.Entry(frame, width=width, name='psys', font=("Arial", 14))
     p_sys.grid(column=1, row=2, sticky=tk.W)
 
     # Pdys label and entry
-    ttk.Label(frame, text='Pdias(mmHg)').grid(column=0, row=3, sticky=tk.W)
-    p_dys = ttk.Entry(frame, width=width, name='pdys')
+    ttk.Label(frame, text='Pdias(mmHg)', font=("Arial", 14)).grid(column=0, row=3, sticky=tk.W)
+    p_dys = ttk.Entry(frame, width=width, name='pdys', font=("Arial" ,14))
     p_dys.grid(column=1, row=3, sticky=tk.W)
 
     # Add adrenaline button
@@ -141,7 +153,7 @@ def make_buttons(root):
 
 
 
-    label = ttk.Label(frame, font="Arial 20")
+    label = ttk.Label(frame, font=("Arial" ,20))
     label.grid(column=2, row=0, rowspan=2, sticky=tk.N)
 
     # Remove
@@ -153,13 +165,12 @@ def make_buttons(root):
                                            medicine['Adrenaline'],
                                            medicine['Adenosine'],
                                            medicine['Caffeine'],
-                                           figure, axes,
-                                           medicine['Remove']),
+                                           figure, axes),
                width=width * 2 + 4,
                text="Calc Pressure").grid(column=0, row=8, columnspan=2)
 
     for widget in frame.winfo_children():
-        widget.grid(padx=5, pady=10, ipadx=2, ipady=1)
+        widget.grid(padx=5, pady=12, ipadx=2, ipady=12)
 
     return frame
 
@@ -167,13 +178,16 @@ def make_buttons(root):
 def main():
     root = tk.Tk()
     root.title('Plotting the pressure')
-    root.geometry("800x410")
+    root.geometry("1300x724")
     root.resizable(0, 0)
 
     style = ttk.Style()
     style.theme_use('alt')
-    style.configure('TButton', font=('American typewriter', 8), background='#222222', foreground='white')
+    style.configure('TButton', font=('American typewriter', 16), background='#222222', foreground='white')
     style.map('TButton', background=[('active', '#4287f5'), ('disabled', '#00f0f0')])
+
+    style.configure('TButton_pressed', font=('American typewriter', 16), background='#222222', foreground='white')
+    style.map('TButton_pressed', background=[('disabled', '#4287f5')])
 
     fr = make_buttons(root)
 
